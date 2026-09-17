@@ -15,32 +15,24 @@ Developed and maintained by **[Sakshi Pandey](https://github.com/blue007-arc)** 
 
 ## 🏗️ Multi-Stage Pipeline Workflow
 
-```
-                        ┌───────────────────────────────┐
-                        │    User Topic / Query         │
-                        └───────────────┬───────────────┘
-                                        ▼
-                        ┌───────────────────────────────┐
-                        │         Searcher Agent        │
-                        │ (Scrapegraph AI & Web Search) │
-                        └───────────────┬───────────────┘
-                                        ▼
-                        ┌───────────────────────────────┐
-                        │         Analyst Agent         │
-                        │ (Synthesizes trends & data)   │
-                        └───────────────┬───────────────┘
-                                        ▼
-                        ┌───────────────────────────────┐
-                        │          Writer Agent         │
-                        │ (Structured cited report)     │
-                        └───────────────┬───────────────┘
-                                        │
-                    ┌───────────────────┴───────────────────┐
-                    ▼                                       ▼
-         ┌─────────────────────┐                 ┌─────────────────────┐
-         │ Streamlit Dashboard │                 │ Native MCP Server   │
-         │ (Web & CLI UI)      │                 │ (Claude / Cursor)   │
-         └─────────────────────┘                 └─────────────────────┘
+```mermaid
+graph TD
+    classDef inputNode fill:#1E293B,stroke:#38BDF8,stroke-width:2px,color:#F8FAFC;
+    classDef stageNode fill:#0F172A,stroke:#818CF8,stroke-width:2px,color:#F8FAFC;
+    classDef outputNode fill:#064E3B,stroke:#34D399,stroke-width:2px,color:#FFF;
+
+    Topic["🎯 User Research Query / Topic"]:::inputNode
+
+    subgraph AutonomousResearchPipeline ["🔄 Multi-Stage Agno Workflow Engine"]
+        Topic --> Searcher["🔍 Searcher Agent<br/><i>(Scrapegraph AI & Web Extraction)</i>"]:::stageNode
+        Searcher --> Analyst["📊 Analyst Agent<br/><i>(Pattern synthesis & data normalization)</i>"]:::stageNode
+        Analyst --> Writer["✍️ Writer Agent<br/><i>(Markdown synthesis with inline citations)</i>"]:::stageNode
+    end
+
+    subgraph ClientInterfaces ["🔌 Delivery Channels"]
+        Writer --> StreamlitUI["💻 Streamlit Web UI<br/><i>(Interactive research exploration)</i>"]:::outputNode
+        Writer --> MCPServer["🔌 Native MCP Server<br/><i>(Direct tool in Claude Desktop & Cursor)</i>"]:::outputNode
+    end
 ```
 
 ---
